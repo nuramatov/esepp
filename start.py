@@ -1,4 +1,5 @@
 import argparse
+import pexpect
 
 # read filename from args
 parser = argparse.ArgumentParser(description = 'Basic launcher for ESEPP. Reads parameters from .ini config file.')
@@ -19,13 +20,6 @@ with open(filename, 'r') as file:
         # if not a comment line
         if line.strip() and line.strip()[0] != '#':
             key, value = [i.strip() for i in line.split('=')]
-            if value.isdigit():
-                value = int(value)
-            else:
-                try:
-                    value = float(value)
-                except:
-                    pass
             parameters[key] = value
 
 # full list of available parameters in the original ESEPP order
@@ -36,5 +30,6 @@ if parameters['theta'] == 1:
     param_list.pop(7)
     param_list.pop(7)
 
-
-
+child = pexpect.spawn('./esepp')
+for param in param_list:
+    child.sendline(parameters[param])
