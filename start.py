@@ -23,7 +23,7 @@ with open(filename, 'r') as file:
             parameters[key] = value
 
 # full list of available parameters in the original ESEPP order
-param_list = ['lepton_type', 'rosenbluth', 'proton_structure', 'bremsstrahlung', 'vacuum_polarization', 'two_photon', 'theta', 'min_theta', 'max_theta', 'phi', 'min_phi', 'max_phi', 'num_events', 'format', 'prefix']
+param_list = ['lepton_type', 'rosenbluth', 'proton_structure', 'bremsstrahlung', 'vacuum_polarization', 'two_photon', 'full_lepton_energy', 'photon_cutoff', 'bs_photon_max', 'theta', 'min_theta', 'max_theta', 'phi', 'min_phi', 'max_phi', 'num_events', 'format', 'prefix']
 
 # remove min_theta and max_theta if full range was selected
 if parameters['theta'] == 1:
@@ -33,3 +33,4 @@ if parameters['theta'] == 1:
 child = pexpect.spawn('./esepp')
 for param in param_list:
     child.sendline(parameters[param])
+child.interact()
